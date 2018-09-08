@@ -1,0 +1,9 @@
+package com.chenyilei.MyTest;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface GirlRepository extends JpaRepository<Girl,Integer> {
+    List<Girl> findGirlsByAge(Integer id);
+}

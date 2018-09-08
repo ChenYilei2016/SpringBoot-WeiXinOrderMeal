@@ -1,4 +1,4 @@
-package com.chenyilei.sell;
+package com.chenyilei;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
