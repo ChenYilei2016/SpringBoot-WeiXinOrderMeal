@@ -2,6 +2,9 @@ package com.chenyilei.dataobject;
 
 import com.chenyilei.enums.OrderStatusEnum;
 import com.chenyilei.enums.PayStatusEnum;
+import com.chenyilei.utils.serializer.Date2LongSerializer;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -33,7 +36,9 @@ public class OrderMaster {
     //支付状态 默认未支付
     private Integer payStatus = PayStatusEnum.WAIT.getCode();
 
-
+    @JsonSerialize(using = Date2LongSerializer.class)
     private Date createTime;
+
+    @JsonSerialize(using =Date2LongSerializer.class)
     private Date updateTime;
 }

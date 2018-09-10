@@ -9,6 +9,7 @@ import lombok.Data;
 import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,6 +36,6 @@ public class OrderDTO extends OrderMaster {
 //    private Date createTime;
 //    private Date updateTime;
 
-    @Transient
-    List<OrderDetail> orderDetailList;
+
+    List<OrderDetail> orderDetailList = new ArrayList<>();
 }

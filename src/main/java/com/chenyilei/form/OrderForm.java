@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 public class OrderForm {
 
-    @NotEmpty
+    @NotEmpty(message = "name不能为空")
     private String name;
 
     private String phone;
@@ -20,7 +20,7 @@ public class OrderForm {
 
     private String openid;
 
-//    private List<CartDTO> items;
+//    private List<OrderDetail> items;
     private String items;
 }
 

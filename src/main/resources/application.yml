@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 80
   context-path: /sell
 spring:
   datasource:
@@ -10,4 +10,10 @@ spring:
 #    url: jdbc:mysql://132.232.117.84/dbgirls?characterEncoding=utf-8&useSSL=false
   jpa:
     show-sql: true
+  jackson:
+    default-property-inclusion: non_null
 
+
+wechat:
+  mpAppId: wx8400dc20e725e7d3
+  mpAppSecret: 23c32e1ddd96618605307b472062c3b5
