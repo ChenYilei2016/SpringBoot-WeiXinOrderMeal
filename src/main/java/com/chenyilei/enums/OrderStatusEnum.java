@@ -5,7 +5,7 @@ import lombok.Getter;
 import org.springframework.util.StringUtils;
 
 @Getter
-public enum  OrderStatusEnum {
+public enum  OrderStatusEnum implements CodeEnum<Integer>{
 
     NEW(0,"新订单"),
     FINISHED(1,"完结"),

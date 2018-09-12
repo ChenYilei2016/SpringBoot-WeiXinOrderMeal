@@ -2,6 +2,7 @@ package com.chenyilei.dataobject;
 
 import com.chenyilei.enums.OrderStatusEnum;
 import com.chenyilei.enums.PayStatusEnum;
+import com.chenyilei.utils.EnumUtils;
 import com.chenyilei.utils.serializer.Date2LongSerializer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -41,4 +42,11 @@ public class OrderMaster {
 
     @JsonSerialize(using =Date2LongSerializer.class)
     private Date updateTime;
+
+    public OrderStatusEnum getOrderStateEnum(){
+        return EnumUtils.getByCode(this.getOrderStatus(),OrderStatusEnum.class);
+    }
+    public PayStatusEnum getPayStatusEnum(){
+        return EnumUtils.getByCode(this.getPayStatus(),PayStatusEnum.class);
+    }
 }

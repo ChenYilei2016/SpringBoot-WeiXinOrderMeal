@@ -78,5 +78,33 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    @Override
+    public ProductInfo onSale(String productId) {
+        ProductInfo productInfo = productInfoRepository.findOne(productId);
+        if(null == productInfo){
+            throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+        }
+        if( productInfo.getProductStatus() == ProductStatusEnum.UP.getCode() ){
+            throw new SellException(ResultEnum.PRODUCT_STATUS_ERROR);
+        }
+
+        productInfo.setProductStatus( ProductStatusEnum.UP.getCode() );
+        return productInfoRepository.save(productInfo);
+    }
+
+    @Override
+    public ProductInfo offSale(String productId) {
+        ProductInfo productInfo = productInfoRepository.findOne(productId);
+        if(null == productInfo){
+            throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
+        }
+        if( productInfo.getProductStatus() == ProductStatusEnum.DOWN.getCode() ){
+            throw new SellException(ResultEnum.PRODUCT_STATUS_ERROR);
+        }
+
+        productInfo.setProductStatus( ProductStatusEnum.DOWN.getCode() );
+        return productInfoRepository.save(productInfo);
+    }
+
 
 }

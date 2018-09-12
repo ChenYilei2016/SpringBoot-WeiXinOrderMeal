@@ -79,8 +79,10 @@ public class OrderServiceImplTest {
 
     @Test
     public void findList() {
-        Page<OrderDTO> result = orderService.findList(OPENID,new PageRequest(0,2));
-        System.out.println( result  );
+//        Page<OrderDTO> result = orderService.findList(OPENID,new PageRequest(0,2));
+//        System.out.println( result  );
+        Page<OrderDTO> list = orderService.findList(new PageRequest(0, 2));
+        log.info(list.toString());
     }
 
     @Test

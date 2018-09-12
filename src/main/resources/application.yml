@@ -12,6 +12,8 @@ spring:
     show-sql: true
   jackson:
     default-property-inclusion: non_null
+  freemarker:
+    cache: false
 
 
 wechat:

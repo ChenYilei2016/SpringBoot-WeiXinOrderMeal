@@ -19,6 +19,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -112,6 +113,13 @@ public class OrderServiceImpl implements OrderService {
         //不用显示详情,因为只显示 订单列表
         Page<OrderDTO> result = (Page<OrderDTO>)(Page)orderMasters; //转换还可以加个转换器类
         return result;
+    }
+
+    @Override
+    public Page<OrderDTO> findList(Pageable pageable) {
+        Page<OrderMaster> orderMasters = orderMasterRepository.findAll(pageable);
+        List<OrderDTO> orderDTOList = (List<OrderDTO>)(List)orderMasters.getContent();
+        return new PageImpl<OrderDTO>(orderDTOList ,pageable,orderMasters.getTotalElements());
     }
 
     @Override

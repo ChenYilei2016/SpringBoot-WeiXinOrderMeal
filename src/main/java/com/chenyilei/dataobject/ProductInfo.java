@@ -1,13 +1,16 @@
 package com.chenyilei.dataobject;
 
 import lombok.Data;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Data
+@DynamicUpdate
 public class ProductInfo {
 
     @Id
@@ -29,5 +32,9 @@ public class ProductInfo {
 
     //类目 编号
    private Integer categoryType;
+
+   private Date createTime;
+
+   private Date updateTime;
 
 }
