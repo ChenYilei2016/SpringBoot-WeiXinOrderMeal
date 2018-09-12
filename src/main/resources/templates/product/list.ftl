@@ -61,7 +61,7 @@
                         <#if currentPage lte 1 >
                             <li class="disabled"><a href="#">Prev</a></li>
                         <#else >
-                            <li><a href="/sell/seller/order/list?page=${currentPage-1}">Prev</a></li>
+                            <li><a href="/sell/seller/product/list?page=${currentPage-1}">Prev</a></li>
                         </#if>
 
 
@@ -72,7 +72,7 @@
                                     </li>
                             <#else>
                                     <li>
-                                        <a href="/sell/seller/order/list?page=${temp}">${temp}</a>
+                                        <a href="/sell/seller/product/list?page=${temp}">${temp}</a>
                                     </li>
                             </#if>
                         </#list>

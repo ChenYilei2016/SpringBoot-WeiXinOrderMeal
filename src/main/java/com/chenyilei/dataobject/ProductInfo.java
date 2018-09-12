@@ -1,5 +1,6 @@
 package com.chenyilei.dataobject;
 
+import com.chenyilei.enums.ProductStatusEnum;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -28,7 +29,7 @@ public class ProductInfo {
     private String productIcon;
 
     //状态 0正常 1下架
-    private Integer productStatus;
+    private Integer productStatus = ProductStatusEnum.UP.getCode();
 
     //类目 编号
    private Integer categoryType;

@@ -1,17 +1,26 @@
 package com.chenyilei.controller;
 
+import com.chenyilei.dataobject.ProductCategory;
 import com.chenyilei.dataobject.ProductInfo;
+import com.chenyilei.exception.SellException;
+import com.chenyilei.form.ProductForm;
 import com.chenyilei.service.CategoryService;
 import com.chenyilei.service.ProductService;
+import com.chenyilei.utils.KeyUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,6 +61,56 @@ public class SellProductController {
         productService.offSale(productId);
 
         map.put("url","/sell/seller/product/list");
+        return new ModelAndView("common/success",map);
+    }
+
+    /**
+     * 跳到 商品添加 更新 页面
+     */
+    @GetMapping("/index")
+    public ModelAndView index(Map map,
+                              @RequestParam(value = "productId",required = false)String productId ){
+
+        //判断是新增 还是 更新
+        //更新的话 要带着原有的信息
+        if(!StringUtils.isEmpty(productId )){
+            ProductInfo productInfo = productService.findOne(productId);
+            map.put("productInfo" ,productInfo );
+        }
+
+        //查询所有选择类目
+        List<ProductCategory> categoryList = categoryService.findAll();
+        map.put("categoryList",categoryList);
+
+        return new ModelAndView("product/index",map);
+    }
+
+    //更新数据
+    @RequestMapping("/save")
+    public ModelAndView save(@Valid ProductForm form,
+                             BindingResult bindingResult,
+                             Map map){
+        if( bindingResult.hasErrors() ){
+            map.put("url","/sell/seller/product/index");
+            map.put("msg",bindingResult.getFieldError().getDefaultMessage());
+            return new ModelAndView("common/error",map);
+        }
+        ProductInfo productInfo = new ProductInfo();;
+        try {
+            BeanUtils.copyProperties(form,productInfo);
+            if( StringUtils.isEmpty(form.getProductId() ) ){
+                productInfo.setProductId(KeyUtil.genUniqueKey());
+            }else{
+                productInfo = productService.findOne(form.getProductId());
+            }
+            productService.save(productInfo);
+        }catch (SellException e){
+            map.put("msg",e.getMessage());
+            map.put("url","/sell/seller/product/index");
+            return new ModelAndView("common/error",map);
+        }
+
+        map.put("url","/sell/seller/product/index");
         return new ModelAndView("common/success",map);
     }
 }
