@@ -13,6 +13,7 @@ import java.io.PrintWriter;
 public class SystemController {
     private static final long serialVersionUID = 1L;
     private static final String token = "123456";
+
     @RequestMapping("/portal")
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String signature = request.getParameter("signature");

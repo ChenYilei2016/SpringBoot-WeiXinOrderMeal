@@ -33,6 +33,9 @@ public class WeChatController {
     @Autowired
     private WxMpService wxMpService;
 
+    @Autowired
+    private WxMpService wxOpenService;
+
     //TODO:
 
     // http://sellchenyilei.mynatapp.cc/sell/wechat/authorize
@@ -55,6 +58,34 @@ public class WeChatController {
         WxMpOAuth2AccessToken wxMpOAuth2AccessToken= null;
         try {
             wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+        }
+        String openId = wxMpOAuth2AccessToken.getOpenId();
+
+        return "redirect:" + state + "?openid="+  openId;
+    }
+
+    /**
+     * 公众平台 登陆账号
+     */
+    //http://sellchenyilei.mynatapp.cc/sell/wechat/qrAuthorize?returnUrl=http://www.baidu.com
+    public static final String redirectUrl2="http://sellchenyilei.mynatapp.cc/sell/wechat/qrUserInfo";
+
+    @GetMapping("/qrAuthorize")
+    public String qrAuthorize(@RequestParam("returnUrl")String returnUrl ){
+        String resultUrl = wxOpenService.buildQrConnectUrl(redirectUrl2,WxConsts.QRCONNECT_SCOPE_SNSAPI_LOGIN,URLEncoder.encode(returnUrl));
+        log.info("[微信网页登陆]获取code,result={}",resultUrl);
+        // /!!
+        return "redirect:" + resultUrl  ;
+    }
+
+    @GetMapping("/qrUserInfo")
+    public String qrUserInfo(@RequestParam("code")String code,
+                           @RequestParam("state")String state){
+        WxMpOAuth2AccessToken wxMpOAuth2AccessToken= null;
+        try {
+            wxMpOAuth2AccessToken = wxOpenService.oauth2getAccessToken(code);
         } catch (WxErrorException e) {
             e.printStackTrace();
         }

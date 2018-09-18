@@ -11,6 +11,10 @@ public class WechatMpProperties {
 
     private String mpAppId;
     private String mpAppSecret;
+
+    private String openAppId;
+    private String openAppSecret;
+
     //商户号
     private String mchId;
 
