@@ -88,7 +88,37 @@
 
         </div>
 
+    <audio>
 
+    </audio>
+
+    <script type="text/javascript">
+        var websocket = null;
+        //判断浏览器是否支持
+        if('WebSocket' in window){
+            websocket= new WebSocket('ws://localhost/sell/webSocket');
+        }else{
+            alert('浏览器不支持websocket');
+        }
+
+        websocket.onopen = function (ev) {
+            console.log('建立连接');
+        };
+        websocket.onclose = function (ev) {
+            console.log('连接关闭');
+        };
+        websocket.onerror = function (ev) {
+            alert('服务器出现了错误'+ev);
+        };
+        websocket.onmessage = function (ev) {
+            console.log('收到消息'+ev.data);
+            alert('一条消息');
+        };
+        //页面关闭之前 关闭连接
+        websocket.beforeunload = function () {
+            websocket.close();
+        };
+    </script>
 
     </body>
 </html>

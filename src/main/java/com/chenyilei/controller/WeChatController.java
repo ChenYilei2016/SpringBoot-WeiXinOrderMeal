@@ -62,7 +62,7 @@ public class WeChatController {
             e.printStackTrace();
         }
         String openId = wxMpOAuth2AccessToken.getOpenId();
-
+        log.info(openId);
         return "redirect:" + state + "?openid="+  openId;
     }
 
@@ -90,7 +90,7 @@ public class WeChatController {
             e.printStackTrace();
         }
         String openId = wxMpOAuth2AccessToken.getOpenId();
-
+        log.info(openId);
         return "redirect:" + state + "?openid="+  openId;
     }
 }

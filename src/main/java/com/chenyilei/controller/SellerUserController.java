@@ -45,7 +45,7 @@ public class SellerUserController {
                               Map map,
                               HttpServletResponse response){
 //        //判断有无cookie 并且是否有效
-        if(tokenCookie != null && null!= sellerInfoRepository.findByUsername(tokenCookie) ){
+        if(tokenCookie != null && !StringUtils.isEmpty(redisTemplate.opsForValue().get(RedisConstant.TOKEN_PREFIX+tokenCookie) )  ){
             map.put("url","/sell/seller/order/list");
             map.put("msg","已经登陆") ;
             return new ModelAndView("common/error",map);
@@ -89,7 +89,6 @@ public class SellerUserController {
         }
 
         return new ModelAndView("redirect:/seller/to_login");
-
     }
 
 }

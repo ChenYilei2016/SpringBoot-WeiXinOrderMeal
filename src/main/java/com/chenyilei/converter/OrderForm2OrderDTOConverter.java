@@ -3,7 +3,6 @@ package com.chenyilei.converter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.chenyilei.dataobject.OrderDetail;
-import com.chenyilei.dto.CartDTO;
 import com.chenyilei.dto.OrderDTO;
 import com.chenyilei.form.OrderForm;
 import lombok.Data;

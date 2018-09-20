@@ -1,5 +1,7 @@
 package com.chenyilei.controller;
 
+import com.chenyilei.service.impl.WebSocket;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -11,6 +13,11 @@ import java.io.PrintWriter;
 
 @Controller
 public class SystemController {
+
+
+    @Autowired
+    private WebSocket webSocket;
+
     private static final long serialVersionUID = 1L;
     private static final String token = "123456";
 
@@ -28,4 +35,10 @@ public class SystemController {
         pw.append(echostr);
         pw.flush();
     }
+
+    @RequestMapping("/socket")
+    public void testSocket(){
+        webSocket.sendMessage("一条信息");
+    }
+
 }
