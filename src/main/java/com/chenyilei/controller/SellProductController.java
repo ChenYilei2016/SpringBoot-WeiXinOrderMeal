@@ -9,6 +9,8 @@ import com.chenyilei.service.ProductService;
 import com.chenyilei.utils.KeyUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
@@ -87,11 +89,13 @@ public class SellProductController {
 
     //更新数据
     @RequestMapping("/save")
+//    @CachePut(key = "#form.productId") 返回对象不行 直接清楚
+    @CacheEvict(cacheNames = "product",key = "123")
     public ModelAndView save(@Valid ProductForm form,
                              BindingResult bindingResult,
                              Map map){
         if( bindingResult.hasErrors() ){
-            map.put("url","/sell/seller/product/index");
+            map.put("url","/sell/seller/product/list");
             map.put("msg",bindingResult.getFieldError().getDefaultMessage());
             return new ModelAndView("common/error",map);
         }
@@ -102,15 +106,16 @@ public class SellProductController {
                 productInfo.setProductId(KeyUtil.genUniqueKey());
             }else{
                 productInfo = productService.findOne(form.getProductId());
+                BeanUtils.copyProperties(form,productInfo);
             }
             productService.save(productInfo);
         }catch (SellException e){
             map.put("msg",e.getMessage());
-            map.put("url","/sell/seller/product/index");
+            map.put("url","/sell/seller/product/list");
             return new ModelAndView("common/error",map);
         }
 
-        map.put("url","/sell/seller/product/index");
+        map.put("url","/sell/seller/product/list");
         return new ModelAndView("common/success",map);
     }
 }
